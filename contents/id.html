@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ID]全○○言えるかな</title>
+
+    <style>
+        @media (max-width: 320px) {
+
+            span {
+                width: 50px;
+                width: 50px;
+            }
+        }
+
+        @media (min-width: 800px) {
+
+            span {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+
+        span{
+            
+            background-color: #eee;
+                display: inline-block;
+                margin: 3px;
+        }
+        body img{
+            width: 100%;
+            height: 100%;
+        }
+        .leftkotei{
+            position: fixed;
+            top: 0 ;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="./" style="top:100px;display: block;position: absolute;"><br>  戻る</a>
+    <button id="kaisi" onclick="kaisi();">開始</button>
+    <div id="kaisigo" style="display: none;">
+        <div class="leftkotei">
+            
+            <input type="text" id="textbox">
+            <button onclick="kotaeru()">答える</button>
+            <p id="anscownt">0</p>
+            <p id="timing">0</p>
+        </div>
+        <div id="body"
+            style="border: solid 1px #000;margin: auto;width: calc(100% - 320px);position: absolute;right: 0;top: 0;">
+            error
+        </div>
+    </div>
+
+</body>
+<script>// CSVファイルを取得
+
+let names = [];
+let kotaeta = [];
+    times = 0
+        kotaetakazu = 0
+    let csv = new XMLHttpRequest();
+
+    // CSVファイルへのパス
+    csv.open("GET", "id.csv", false);
+
+    // csvファイル読み込み失敗時のエラー対応
+    try {
+        csv.send(null);
+    } catch (err) {
+        console.log(err);
+    }
+
+    // 配列を定義
+    let csvArray = [];
+
+    // 改行ごとに配列化
+    let lines = csv.responseText.split(/\r\n|\n/);
+
+    // 1行ごとに処理
+    for (let i = 0; i < lines.length; ++i) {
+        let cells = lines[i].split(",");
+        if (cells.length != 1) {
+            csvArray.push(cells);
+        }
+    }
+    
+    document.getElementById("body").innerHTML = ""
+    for (tei = 0; tei < csvArray.length; tei++) {
+        document.getElementById("body").innerHTML += "<span>" + "<img src='" + csvArray[tei][1] +  "' id='" + tei + "' style='display:none;'>" + "</span>"
+        
+        names[tei] = csvArray[tei][0]
+        kotaeta[tei] = 0
+    }
+
+    function kaisi() {
+        document.getElementById('kaisi').style.display = 'none'
+        document.getElementById('kaisigo').style.display = 'block'
+        setInterval(() => {
+            timer()
+        }, 100);
+    }
+
+    function kotaeru(){
+        console.log(names.indexOf(document.getElementById("textbox").value))
+        if(names.indexOf(document.getElementById("textbox").value) == -1){}else{
+            kotaeta[names.indexOf(document.getElementById("textbox").value)] = 1;
+            document.getElementById(names.indexOf(document.getElementById("textbox").value)).style.display = "block";
+        }
+        anscow()
+    }
+
+    function anscow(){
+        kotaetakazu = 0
+        
+        for (let ki = 0; ki < names.length; ki++) {
+            if(kotaeta[ki] == 1) kotaetakazu += 1
+            
+        }
+        document.getElementById("anscownt").innerHTML = kotaetakazu
+    }
+    function timer(){
+        if(kotaetakazu == csvArray.length){}else{
+            times += 100
+            document.getElementById("timing").innerHTML = " 秒数 : " + (times / 1000)
+        }
+    }
+</script>
+
+</html>
