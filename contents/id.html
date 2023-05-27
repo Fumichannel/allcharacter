@@ -124,8 +124,12 @@ let kotaeta = [];
             if(kotaeta[ki] == 1) kotaetakazu += 1
             
         }
-        document.getElementById("anscownt").innerHTML = kotaetakazu
+        document.getElementById("anscownt").innerHTML = kotaetakazu + "人/" + csvArray.length + "人中"
     }
+
+
+    anscow();
+
     function timer(){
         if(kotaetakazu == csvArray.length){}else{
             times += 100

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全○○言えるかな 全員</title>
+    <title>[ALL]全○○言えるかな</title>
 
     <style>
         @media (max-width: 320px) {
@@ -100,6 +100,8 @@ let kotaeta = [];
         kotaeta[tei] = 0
     }
 
+    
+
     function kaisi() {
         document.getElementById('kaisi').style.display = 'none'
         document.getElementById('kaisigo').style.display = 'block'
@@ -117,6 +119,7 @@ let kotaeta = [];
         anscow()
     }
 
+
     function anscow(){
         kotaetakazu = 0
         
@@ -124,8 +127,12 @@ let kotaeta = [];
             if(kotaeta[ki] == 1) kotaetakazu += 1
             
         }
-        document.getElementById("anscownt").innerHTML = kotaetakazu
+        document.getElementById("anscownt").innerHTML = kotaetakazu + "人/" + csvArray.length + "人中"
     }
+
+
+    anscow()
+
     function timer(){
         if(kotaetakazu == csvArray.length){}else{
             times += 100
